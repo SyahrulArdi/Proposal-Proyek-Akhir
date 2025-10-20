@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <title>Kunci Pola</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; overflow: hidden; /* Mencegah scroll body */ }
+        .lock-container { background-color: #16213e; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
+        #pattern-container { position: relative; /* Penting untuk canvas overlay */ width: 250px; /* Beri ukuran eksplisit */ height: 250px; margin: 20px auto; touch-action: none; /* Mencegah aksi default browser */ }
+        .pattern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; /* Sesuaikan gap */ padding: 20px; /* Beri padding agar dot tidak terlalu pinggir */ box-sizing: border-box; width: 100%; height: 100%; }
+        .dot { width: 30px; height: 30px; background-color: #0f3460; border-radius: 50%; border: 2px solid #5372f0; cursor: pointer; transition: background-color 0.2s; position: relative; display: flex; justify-content: center; align-items: center; /* Untuk center */ }
+        .dot::after { /* Titik tengah visual */ content: ''; display: block; width: 8px; height: 8px; background-color: #5372f0; border-radius: 50%; opacity: 0; transition: opacity 0.2s; }
+        .dot.active { background-color: rgba(83, 114, 240, 0.5); /* Warna lebih transparan saat aktif */ }
+        .dot.active::after { opacity: 1; }
+        #lineCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; /* Canvas tidak menghalangi interaksi dot */ }
+        .message { color: #e94560; margin-top: 15px; height: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="lock-container">
+        <h1 class="text-xl font-bold text-white mb-3">Masukkan Pola</h1>
+        <div id="pattern-container">
+             <div id="pattern-grid" class="pattern-grid">
+                 </div>
+             <canvas id="lineCanvas"></canvas>
+        </div>
+        <p id="message" class="message">
+             <% if (typeof error !== 'undefined' && error) { %>
+                Pola salah, coba lagi.
+             <% } %>
+        </p>
+
+        <form id="unlockForm" action="/unlock" method="POST" class="hidden">
+            <input type="hidden" name="pattern" id="patternInput">
+        </form>
+    </div>
+
+    <script>
+        const grid = document.getElementById('pattern-grid');
+        const message = document.getElementById('message');
+        const patternInput = document.getElementById('patternInput');
+        const unlockForm = document.getElementById('unlockForm');
+        const patternContainer = document.getElementById('pattern-container');
+        const canvas = document.getElementById('lineCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let isDrawing = false;
+        let patternSequence = []; // Urutan ID dot (string)
+        let dotElements = {}; // Simpan elemen dot berdasarkan ID
+        let lastPosition = null; // Posisi pointer terakhir
+
+        // Atur ukuran canvas sesuai container
+        function resizeCanvas() {
+            const rect = patternContainer.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+             // Set ulang style width/height jika diperlukan (meski sudah 100% di CSS)
+             canvas.style.width = `${rect.width}px`;
+             canvas.style.height = `${rect.height}px`;
+             // Gambar ulang jika sedang menggambar (jarang terjadi saat resize)
+             if(isDrawing) redrawLines();
+        }
+
+        // Buat 9 titik
+        for (let i = 1; i <= 9; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            dot.dataset.id = i.toString(); // Simpan ID sebagai string
+            grid.appendChild(dot);
+            dotElements[i.toString()] = dot; // Simpan elemennya
+
+            // Event listener Mulai (Mouse & Touch)
+            const handleInteractionStart = (e) => {
+                e.preventDefault(); // Mencegah scroll/zoom/dll
+                // Cek apakah targetnya adalah dot
+                 const targetDot = e.target.closest('.dot');
+                 if (!targetDot) return; // Abaikan jika klik/touch bukan di dot
+
+                isDrawing = true;
+                clearPattern();
+                addDotToSequence(targetDot);
+                lastPosition = getRelativePos(getEventPos(e)); // Simpan posisi mulai relatif
+                patternContainer.style.cursor = 'grabbing';
+            };
+
+            dot.addEventListener('mousedown', handleInteractionStart);
+            dot.addEventListener('touchstart', handleInteractionStart, { passive: false });
+        }
+
+        // Event listener Gerak (Mouse & Touch)
+        const handleInteractionMove = (e) => {
+            if (!isDrawing) return;
+            e.preventDefault();
+
+            const currentPos = getRelativePos(getEventPos(e));
+            redrawLines(); // Gambar ulang garis yg sudah ada
+
+            // Gambar garis dari titik terakhir ke pointer saat ini
+            if (patternSequence.length > 0) {
+                 const lastDotId = patternSequence[patternSequence.length - 1];
+                 const lastDotElement = dotElements[lastDotId];
+                 const lastDotCenter = getDotCenter(lastDotElement);
+                 // Gambar garis abu-abu sementara ke kursor
+                 drawLine(lastDotCenter.x, lastDotCenter.y, currentPos.x, currentPos.y, 'rgba(150, 150, 150, 0.5)');
+            }
+
+            // Cek apakah pointer berada di atas titik lain
+            const dotUnderPointer = getDotFromPosition(currentPos);
+            if (dotUnderPointer && !patternSequence.includes(dotUnderPointer.dataset.id)) {
+                 addDotToSequence(dotUnderPointer);
+                 // Tidak perlu update lastPosition di sini, redrawLines akan mengurusnya
+            }
+             lastPosition = currentPos; // Update posisi pointer terakhir
+        };
+
+        // Event listener Akhir (Mouse & Touch)
+        const handleInteractionEnd = (e) => {
+            if (!isDrawing) return;
+            e.preventDefault();
+            isDrawing = false;
+            patternContainer.style.cursor = 'default';
+            // Hapus garis sementara dan gambar garis final
+            redrawLines();
+            submitPattern();
+        };
+
+        // Pasang listener global di container atau body/window
+        patternContainer.addEventListener('mousemove', handleInteractionMove);
+        patternContainer.addEventListener('touchmove', handleInteractionMove, { passive: false });
+        window.addEventListener('mouseup', handleInteractionEnd); // Di window jika mouse dilepas di luar container
+        window.addEventListener('touchend', handleInteractionEnd);
+        window.addEventListener('touchcancel', handleInteractionEnd); // Jika sentuhan dibatalkan
+
+
+        function addDotToSequence(dotElement) {
+            if (!dotElement || patternSequence.includes(dotElement.dataset.id)) return;
+            dotElement.classList.add('active');
+            patternSequence.push(dotElement.dataset.id);
+        }
+
+        function clearPattern() {
+            patternSequence = [];
+            Object.values(dotElements).forEach(d => d.classList.remove('active'));
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            message.textContent = '';
+            lastPosition = null;
+        }
+
+        // Mendapatkan posisi X,Y relatif terhadap canvas
+        function getRelativePos(absolutePos) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: absolutePos.x - rect.left,
+                y: absolutePos.y - rect.top
+            };
+        }
+
+        // Mendapatkan posisi X,Y absolut dari event (mouse atau touch)
+        function getEventPos(e) {
+            let x, y;
+            if (e.touches && e.touches[0]) {
+                x = e.touches[0].clientX;
+                y = e.touches[0].clientY;
+            } else {
+                x = e.clientX;
+                y = e.clientY;
+            }
+            return { x, y };
+        }
+
+
+        // Mendapatkan posisi tengah dot relatif terhadap canvas
+        function getDotCenter(dotElement) {
+             const dotRect = dotElement.getBoundingClientRect();
+             const canvasRect = canvas.getBoundingClientRect();
+             return {
+                 x: dotRect.left + dotRect.width / 2 - canvasRect.left,
+                 y: dotRect.top + dotRect.height / 2 - canvasRect.top
+             };
+        }
+
+        // Cek dot mana yg ada di posisi (relatif) x, y
+        function getDotFromPosition(pos) {
+             for (const id in dotElements) {
+                 const dot = dotElements[id];
+                 const center = getDotCenter(dot);
+                 const radius = dot.offsetWidth / 2; // Ambil radius dot
+                 // Hitung jarak dari pusat dot ke posisi pointer
+                 const distance = Math.sqrt(Math.pow(pos.x - center.x, 2) + Math.pow(pos.y - center.y, 2));
+                 if (distance <= radius + 10) { // Beri sedikit toleransi (+10px)
+                     return dot;
+                 }
+             }
+             return null;
+        }
+
+        // Fungsi menggambar garis
+        function drawLine(x1, y1, x2, y2, color = '#5372f0', lineWidth = 5) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.lineCap = 'round'; // Ujung garis bulat
+            ctx.lineJoin = 'round'; // Sambungan garis bulat
+            ctx.stroke();
+        }
+
+        // Menggambar ulang semua garis berdasarkan sequence
+        function redrawLines() {
+             ctx.clearRect(0, 0, canvas.width, canvas.height); // Hapus semua
+             if (patternSequence.length < 2) return;
+
+             let prevPos = null;
+             for (let i = 0; i < patternSequence.length; i++) {
+                 const dotId = patternSequence[i];
+                 const currentDot = dotElements[dotId];
+                 const currentPos = getDotCenter(currentDot);
+                 if (prevPos) {
+                     drawLine(prevPos.x, prevPos.y, currentPos.x, currentPos.y);
+                 }
+                 prevPos = currentPos;
+             }
+        }
+
+
+        function submitPattern() {
+            if (patternSequence.length > 0) {
+                patternInput.value = patternSequence.join('');
+                unlockForm.submit();
+            } else {
+                 // Jika tidak ada pola digambar, mungkin reset saja
+                 clearPattern();
+            }
+        }
+
+         // Panggil resizeCanvas saat load dan resize
+         window.addEventListener('load', resizeCanvas);
+         window.addEventListener('resize', resizeCanvas);
+         // Panggil resize setelah sedikit delay
+         setTimeout(resizeCanvas, 100);
+
+    </script>
+</body>
+</html>

@@ -20,10 +20,13 @@
     <div class="bg-gradient-to-r from-blue-800 to-blue-900 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
+                <a href="/home" class="text-white hover:text-blue-200 mr-2 text-lg">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
                 <i class="fas fa-wallet text-2xl"></i>
                 <h1 class="text-xl font-bold">Bank Saya</h1>
             </div>
-        </div>
+            </div>
     </div>
 
     <div class="container mx-auto p-4 pb-20">
@@ -128,7 +131,7 @@
                                         <button onclick='openEditModal(<%- JSON.stringify(row) %>)' class="text-blue-400 hover:text-blue-300 text-sm">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <form method="POST" action="/delete" onsubmit="return confirm('Hapus transaksi ini?')" class="inline">
+                                        <form method="POST" action="/bank/delete" onsubmit="return confirm('Hapus transaksi ini?')" class="inline">
                                             <input type="hidden" name="id" value="<%= row.id %>">
                                             <button type="submit" class="text-red-400 hover:text-red-300 text-sm">
                                                 <i class="fas fa-trash"></i>
@@ -150,7 +153,7 @@
                 <h3 class="font-bold text-lg" id="modalTitle">Tambah Transaksi</h3>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-white"> <i class="fas fa-times"></i> </button>
             </div>
-            <form method="POST" id="transactionForm" action="/add">
+            <form method="POST" id="transactionForm" action="/bank/add">
                 <input type="hidden" name="id" id="editId">
                 <div class="p-4 space-y-4">
                     <div>
@@ -190,8 +193,8 @@
             transactionForm.reset();
             editIdInput.value = '';
             
-            // Atur action form berdasarkan mode (tambah atau edit)
-            transactionForm.action = data ? '/edit' : '/add';
+            // Atur action form berdasarkan mode (tambah atau edit) - Action Diubah
+            transactionForm.action = data ? '/bank/edit' : '/bank/add'; 
             
             if (data) { // Mode Edit
                 modalTitle.textContent = 'Edit Transaksi';
@@ -207,7 +210,6 @@
                     recipientField.classList.add('hidden');
                 }
             } else { // Mode Tambah
-                // Setel tipe default berdasarkan tombol yang diklik
                  if (type === 'transfer') {
                     transactionType.value = 'transfer';
                     modalTitle.textContent = 'Transfer Dana';
@@ -221,7 +223,7 @@
                     modalTitle.textContent = 'Lakukan Pembayaran';
                     recipientField.classList.remove('hidden');
                 } else { // 'add' atau default
-                    transactionType.value = 'deposit'; // Default ke deposit
+                    transactionType.value = 'deposit'; 
                     modalTitle.textContent = 'Tambah Transaksi';
                     recipientField.classList.add('hidden');
                 }
