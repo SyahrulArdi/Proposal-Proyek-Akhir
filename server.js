@@ -15,17 +15,32 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 // Jangan khawatir, saat deploy ke Vercel, Environment Variables akan digunakan
 const actualSupabaseUrl = process.env.SUPABASE_URL || supabaseUrl;
 const actualSupabaseKey = process.env.SUPABASE_KEY || supabaseKey;
-const supabase = createClient(actualSupabaseUrl, actualSupabaseKey);
+
+// Tambahkan penanganan error jika URL/Key tidak valid saat inisialisasi
+let supabase;
+try {
+    supabase = createClient(actualSupabaseUrl, actualSupabaseKey);
+    if (!actualSupabaseUrl || !actualSupabaseUrl.startsWith('http')) { // Periksa actualSupabaseUrl
+        throw new Error('Supabase URL tidak valid atau belum diatur.');
+    }
+     if (!actualSupabaseKey || actualSupabaseKey.length < 50) { // Periksa actualSupabaseKey
+        throw new Error('Supabase Key tidak valid atau belum diatur.');
+    }
+} catch (error) {
+    console.error("Kesalahan Inisialisasi Supabase:", error.message);
+    console.error("Pastikan URL dan Key Supabase sudah benar di server.js atau Environment Variables Vercel.");
+    // Hentikan server jika koneksi Supabase gagal di awal
+    process.exit(1);
+}
+
 
 // --- PENGATURAN LAIN ---
 const userId = 'bank_utama'; // ID pengguna statis
-const correctPattern = '14789'; // Pola "L"
-
+const correctPattern = '1425368'; // <-- Pola Baru (sesuai gambar)
 // =========================================================================
 // == PENGATURAN DISCORD (OPSIONAL) ==
-// GANTI DENGAN URL WEBHOOK DISCORD ANDA JIKA MAU
 // =========================================================================
-const webhookUrl = "https://discord.com/api/webhooks/1247375576491364463/4yPNqOQhBk-0HRho3Fd55GfWfL4mWw0-Wi13i-J3yAcObbeejxs2-OLUsmI7aXml9sEB"; // <-- GANTI JIKA PERLU
+const webhookUrl = "URL_WEBHOOK_DISCORD_ANDA"; // <-- GANTI JIKA PERLU
 const actualWebhookUrl = process.env.DISCORD_WEBHOOK_URL || webhookUrl;
 // =========================================================================
 
@@ -36,7 +51,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 // --- FUNGSI DISCORD (Async) ---
 async function sendToDiscord(embedData) {
-    if (!actualWebhookUrl || actualWebhookUrl.includes("YOUR_DISCORD")) return; // Jangan kirim jika URL default
+    // Periksa actualWebhookUrl dan placeholder default
+    if (!actualWebhookUrl || actualWebhookUrl === "URL_WEBHOOK_DISCORD_ANDA" || !actualWebhookUrl.startsWith('http')) return;
     const data = { username: 'Log Bank Saya', avatar_url: 'https://i.imgur.com/v1k3rWj.png', embeds: [embedData] };
     try {
         await fetch(actualWebhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
@@ -128,6 +144,7 @@ app.post('/bank/edit', async (req, res) => {
         if (!id) return res.status(400).send("ID Transaksi dibutuhkan");
         const updateData = { amount: parseFloat(amount) || 0, type: type, description: description, recipient: (type === 'transfer' || type === 'payment') ? (recipient || null) : null };
         const { data: oldTxData, error: findError } = await supabase.from('transactions').select('description, amount').eq('id', id).eq('user_id', userId).single();
+        // Abaikan error 'not found' tapi lempar error lain
         if (findError && findError.code !== 'PGRST116') throw findError;
         const { data: updatedTx, error: updateError } = await supabase.from('transactions').update(updateData).eq('id', id).eq('user_id', userId).select().single();
         if (updateError) throw updateError;
@@ -149,6 +166,7 @@ app.post('/bank/delete', async (req, res) => {
         const { id } = req.body;
         if (!id) return res.status(400).send("ID Transaksi dibutuhkan");
         const { data: deletedTx, error } = await supabase.from('transactions').delete().eq('id', id).eq('user_id', userId).select().single();
+        // Abaikan error 'not found' tapi lempar error lain
         if (error && error.code !== 'PGRST116') throw error;
         if (deletedTx) {
             const embed = { title: '❌ Transaksi Dihapus', color: 15158332, fields: [ { name: 'Deskripsi', value: deletedTx.description, inline: true }, { name: 'Jumlah', value: `Rp ${(deletedTx.amount || 0).toLocaleString('id-ID', { minimumFractionDigits: 2 })}`, inline: true }, { name: 'Tipe', value: deletedTx.type, inline: true } ], footer: { text: `User ID: ${userId} | ID Transaksi: ${id}` } };
