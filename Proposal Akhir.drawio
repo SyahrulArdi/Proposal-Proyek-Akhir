@@ -7,9 +7,6 @@
         <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="Use Case Diagram&#xa;Dashboard Monitoring Mahasiswa Wali PENS" vertex="1">
           <mxGeometry height="50" width="700" x="234" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="system" parent="1" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.flowchart.start_2;fillColor=none;fontSize=13;fontStyle=1;strokeColor=#666666;strokeWidth=2;dashed=1;dashPattern=8 4;verticalLabelPosition=top;verticalAlign=bottom;align=center;" value="Sistem Dashboard Monitoring Mahasiswa Wali PENS" vertex="1">
-          <mxGeometry height="1480" width="630" x="270" y="80" as="geometry" />
-        </mxCell>
         <mxCell id="label_admin" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=2;fontColor=#7B61FF;" value="[ Admin ]" vertex="1">
           <mxGeometry height="25" width="200" x="480" y="120" as="geometry" />
         </mxCell>
@@ -192,6 +189,15 @@
         </mxCell>
         <mxCell id="leg4t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" value="Use case sistem (auto)" vertex="1">
           <mxGeometry height="18" width="150" x="155" y="1580" as="geometry" />
+        </mxCell>
+        <mxCell id="Pl-pa2rru6KU6Ju38H05-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="60" width="30" x="115" y="895" as="geometry" />
+        </mxCell>
+        <mxCell id="Pl-pa2rru6KU6Ju38H05-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="60" width="30" x="115" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="Pl-pa2rru6KU6Ju38H05-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="" vertex="1">
+          <mxGeometry height="60" width="30" x="1025" y="1275" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
