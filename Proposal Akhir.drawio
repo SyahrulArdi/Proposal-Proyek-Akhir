@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Halaman-1" id="lYuRlEnudV1VenzP6Tli">
-    <mxGraphModel dx="1147" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1012" dy="547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -37,38 +37,32 @@
         <mxCell id="uc8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Lihat dashboard ringkasan" vertex="1">
           <mxGeometry height="50" width="230" x="415" y="680" as="geometry" />
         </mxCell>
-        <mxCell id="uc9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Pantau mahasiswa binaan" vertex="1">
+        <mxCell id="uc9" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Pantau mahasiswa semester antara" vertex="1">
           <mxGeometry height="50" width="230" x="415" y="750" as="geometry" />
         </mxCell>
-        <mxCell id="uc10" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Tinjau nilai sebelum setujui KRS" vertex="1">
+        <mxCell id="uc10" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Tinjau Mahasiswa Bermasalah" vertex="1">
           <mxGeometry height="50" width="230" x="415" y="820" as="geometry" />
         </mxCell>
-        <mxCell id="uc11" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Lihat grafik IPK per semester" vertex="1">
+        <mxCell id="uc11" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Masalah Kehadiran dll" vertex="1">
           <mxGeometry height="50" width="230" x="750" y="900" as="geometry" />
         </mxCell>
-        <mxCell id="uc12" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Lihat alert akademik" vertex="1">
-          <mxGeometry height="50" width="230" x="415" y="960" as="geometry" />
-        </mxCell>
-        <mxCell id="uc13" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Buat catatan perwalian" vertex="1">
-          <mxGeometry height="50" width="230" x="415" y="1030" as="geometry" />
-        </mxCell>
-        <mxCell id="uc14" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Kelola jadwal konsultasi" vertex="1">
+        <mxCell id="uc14" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Tinjau Nilai Semster Sebelumnya, untuk menyetujui KRS" vertex="1">
           <mxGeometry height="50" width="230" x="415" y="1100" as="geometry" />
         </mxCell>
         <mxCell id="label_mhs" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=2;fontColor=#993C1D;" value="[ Mahasiswa ]" vertex="1">
           <mxGeometry height="25" width="200" x="430" y="1169" as="geometry" />
         </mxCell>
-        <mxCell id="uc15" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Lihat status akademik sendiri" vertex="1">
-          <mxGeometry height="50" width="230" x="415" y="1205" as="geometry" />
+        <mxCell id="uc15" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Lihat status akademik" vertex="1">
+          <mxGeometry height="50" width="230" x="110" y="1290" as="geometry" />
         </mxCell>
-        <mxCell id="uc16" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Terima &amp; baca notifikasi" vertex="1">
-          <mxGeometry height="50" width="230" x="100" y="1255" as="geometry" />
+        <mxCell id="uc16" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Terima &amp;amp; baca&amp;nbsp; status" vertex="1">
+          <mxGeometry height="50" width="230" x="290" y="1210" as="geometry" />
         </mxCell>
-        <mxCell id="uc17" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Lihat jadwal konsultasi" vertex="1">
-          <mxGeometry height="50" width="230" x="415" y="1345" as="geometry" />
+        <mxCell id="uc17" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Mengambil Matakuliah Semester Selanjutnya" vertex="1">
+          <mxGeometry height="50" width="230" x="580" y="1194" as="geometry" />
         </mxCell>
-        <mxCell id="uc18" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Lihat catatan perwalian sendiri" vertex="1">
-          <mxGeometry height="50" width="230" x="415" y="1415" as="geometry" />
+        <mxCell id="uc18" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Lihat Nilai, Kehadiran" vertex="1">
+          <mxGeometry height="50" width="230" x="415" y="1360" as="geometry" />
         </mxCell>
         <mxCell id="actor_admin" parent="1" style="shape=mxgraph.flowchart.actor;fillColor=#e0d7ff;strokeColor=#7B61FF;fontColor=#4a2d99;fontSize=13;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;" value="Admin" vertex="1">
           <mxGeometry height="90" width="60" x="100" y="350" as="geometry" />
@@ -112,20 +106,20 @@
         <mxCell id="e_d11" edge="1" parent="1" source="actor_dosen" style="edgeStyle=orthogonalEdgeStyle;" target="uc11">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_d12" edge="1" parent="1" source="actor_dosen" style="edgeStyle=orthogonalEdgeStyle;" target="uc12">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_d13" edge="1" parent="1" source="actor_dosen" style="edgeStyle=orthogonalEdgeStyle;" target="uc13">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_d14" edge="1" parent="1" source="actor_dosen" style="edgeStyle=orthogonalEdgeStyle;" target="uc14">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_d13" edge="1" parent="1" source="actor_dosen" style="edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="uc14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="1030" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="e_m15" edge="1" parent="1" source="actor_mhs" style="edgeStyle=orthogonalEdgeStyle;" target="uc15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_m16" edge="1" parent="1" source="actor_mhs" style="edgeStyle=orthogonalEdgeStyle;" target="uc16">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_m16" edge="1" parent="1" source="actor_mhs" style="edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="uc16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="405" y="1315" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="e_m17" edge="1" parent="1" source="actor_mhs" style="edgeStyle=orthogonalEdgeStyle;" target="uc17">
           <mxGeometry relative="1" as="geometry" />
@@ -151,11 +145,13 @@
         <mxCell id="e_inc4" edge="1" parent="1" source="uc10" style="dashed=1;endArrow=block;endFill=0;fontSize=11;fontStyle=2;" target="uc11" value="«include»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_ext1" edge="1" parent="1" source="uc12" style="dashed=1;endArrow=open;endFill=0;fontSize=11;fontStyle=2;endArrow=block;endFill=0;" target="uc16" value="«extend»">
+        <mxCell id="e_ext1" edge="1" parent="1" source="uc14" style="dashed=1;endArrow=open;endFill=0;fontSize=11;fontStyle=2;endArrow=block;endFill=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="uc16" value="«extend»">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_inc5" edge="1" parent="1" source="uc13" style="dashed=1;endArrow=block;endFill=0;fontSize=11;fontStyle=2;" target="uc18" value="«include»">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_inc5" edge="1" parent="1" style="dashed=1;endArrow=block;endFill=0;fontSize=11;fontStyle=2;" target="uc18" value="«include»">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="1150" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="e_inc6" edge="1" parent="1" source="uc14" style="dashed=1;endArrow=block;endFill=0;fontSize=11;fontStyle=2;" target="uc17" value="«include»">
           <mxGeometry relative="1" as="geometry" />
@@ -195,6 +191,19 @@
         </mxCell>
         <mxCell id="Pl-pa2rru6KU6Ju38H05-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="" vertex="1">
           <mxGeometry height="60" width="30" x="1025" y="1275" as="geometry" />
+        </mxCell>
+        <mxCell id="ugQfj9P8Edp1lyjUpTu3-1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;" target="uc12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="180" y="925" as="sourcePoint" />
+            <mxPoint x="600.0003183395409" y="980.0588235294117" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc12" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5f0e8;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;fontStyle=1;" value="Lihat grafik IPK per semester" vertex="1">
+          <mxGeometry height="50" width="230" x="415" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="ugQfj9P8Edp1lyjUpTu3-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fde8e0;strokeColor=#993C1D;fontColor=#712B13;fontSize=12;fontStyle=1;" value="Mengikuti Semester antara" vertex="1">
+          <mxGeometry height="50" width="230" x="655" y="1410" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
